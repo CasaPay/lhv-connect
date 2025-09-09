@@ -59,7 +59,10 @@ class LhvConnect
         return Cache::lock('lhv-connect-request', 30)->block(2, function () use ($request) {
 
             $response = $this->client->post($request->endpoint(), [
-                'body' => $request->toXml()
+                'body' => $request->toXml(),
+                'headers' => [
+                    'Content-Type' => 'application/xml'
+                ]
             ]);
 
             if ($response->getStatusCode() !== 202) {
